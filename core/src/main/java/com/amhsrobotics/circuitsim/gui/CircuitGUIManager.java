@@ -71,6 +71,8 @@ public class CircuitGUIManager implements Disposable {
     private TextButton fil2;
     private TextButton fil3;
     private TextButton fil4;
+    private TextField search;
+    private String searchQueary;
     private Window helpMenu, optionsMenu, welcomeMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
@@ -161,7 +163,7 @@ public class CircuitGUIManager implements Disposable {
         container.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         container.setWidth(200);
         container.setPosition(Gdx.graphics.getWidth() - 210, 10);
-        container.setHeight(Gdx.graphics.getHeight() - 160);
+        container.setHeight(Gdx.graphics.getHeight() - 190);
         stage.addActor(container);
 
         table = new Table();
@@ -215,8 +217,8 @@ public class CircuitGUIManager implements Disposable {
         filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         filters.setWidth(200);
-        filters.setHeight(130);
-        filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
+        filters.setHeight(160);
+        filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 170);
         stage.addActor(filters);
 
 
@@ -250,6 +252,10 @@ public class CircuitGUIManager implements Disposable {
         table2.add(fil4).width(70);
         filtersMap.put(fil4, false);
         filters.add(scrollFilters).expand().fill();
+        filters.row();
+        search = new TextField("Search", textFieldStyle);
+        searchQueary = "";
+        filters.add(search).expand().fill();
 
         fil1.addListener(new ChangeListener() {
             @Override
@@ -276,6 +282,13 @@ public class CircuitGUIManager implements Disposable {
             }
         });
 
+        search.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor){
+                searchQueary = search.getText().toLowerCase();
+                filterChanged=true;
+            }
+        });
 
         back = new TextButton("Quit", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
@@ -941,7 +954,7 @@ public class CircuitGUIManager implements Disposable {
     private void showPanel() {
         panelShown = true;
         container.setPosition(Gdx.graphics.getWidth() - 210, 10);
-        filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
+        filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 170);
         hidePanel.setPosition(420, Gdx.graphics.getHeight() - 70);
         simulate.setPosition(540, Gdx.graphics.getHeight() - 70);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
@@ -1071,32 +1084,40 @@ public class CircuitGUIManager implements Disposable {
 
     public void filterWiring() {
         for (TextButton t : reverseMap.get("wiring")) {
-            table.row();
-            table.add(t).width(150);
+            if(t.getText().toString().toLowerCase().contains(searchQueary)){
+                table.row();
+                table.add(t).width(150);
+            }
         }
         table.row();
     }
 
     public void filterControl() {
         for (TextButton t : reverseMap.get("control")) {
-            table.row();
-            table.add(t).width(150);
+            if(t.getText().toString().toLowerCase().contains(searchQueary)){
+                table.row();
+                table.add(t).width(150);
+            }
         }
         table.row();
     }
 
     public void filterMotors() {
         for (TextButton t : reverseMap.get("motors")) {
-            table.row();
-            table.add(t).width(150);
+            if(t.getText().toString().toLowerCase().contains(searchQueary)){
+                table.row();
+                table.add(t).width(150);
+            }
         }
         table.row();
     }
 
     public void filterPneumatics() {
         for (TextButton t : reverseMap.get("pneumatics")) {
-            table.row();
-            table.add(t).width(150);
+            if(t.getText().toString().toLowerCase().contains(searchQueary)){
+                table.row();
+                table.add(t).width(150);
+            }
         }
         table.row();
     }
