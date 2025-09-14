@@ -5,7 +5,7 @@ def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = 'com.amhsrobotics.circuitsim.lwjgl3.Lwjgl3Launcher'
 eclipse.project.name = appName + '-lwjgl3'
-sourceCompatibility = 8.0
+sourceCompatibility = 17
 
 dependencies {
 	implementation project(':core')
